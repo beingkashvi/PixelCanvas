@@ -3,45 +3,40 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db.js');
-const cookieParser = require('cookie-parser'); // <-- 1. IMPORT cookie-parser
+const cookieParser = require('cookie-parser');
 
 // Route imports
 const productRoutes = require('./routes/productRoutes.js');
-const authRoutes = require('./routes/authRoutes.js'); // <-- 2. IMPORT auth routes
+const authRoutes = require('./routes/authRoutes.js');
+const cartRoutes = require('./routes/cartRoutes.js'); // NEW: Import cart routes
 
 // Load env variables
 dotenv.config();
 
 const corsOptions = {
-  origin: "http://localhost:3000", // your Next.js frontend origin
-  credentials: true,                // <- allow cookies to be sent/received
+  origin: "http://localhost:3000",
+  credentials: true,
 };
 
-// Connect to MongoDBz
-connectDB(); // <-- Use the imported function
+// Connect to MongoDB
+connectDB();
 
 const app = express();
 
-// We are allowing all CORS requests
+// Middleware
 app.use(cors(corsOptions));
-
-// Body parser middleware
-app.use(express.json());
-
-// Cookie parser middleware
-app.use(cookieParser()); // <-- 3. USE cookie-parser (to read/write cookies)
+app.use(express.json({ limit: '50mb' })); // Increased limit for base64 images
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(cookieParser());
 
 // --- API Routes ---
-// A simple test route
 app.get('/api', (req, res) => {
   res.send('API is running...');
 });
 
-// Use the product routes
 app.use('/api/products', productRoutes);
-
-// Use the auth routes
-app.use('/api/auth', authRoutes); // <-- 4. MOUNT auth routes
+app.use('/api/auth', authRoutes);
+app.use('/api/cart', cartRoutes); // NEW: Mount cart routes
 
 // --- Start Server ---
 const PORT = process.env.PORT || 5001;

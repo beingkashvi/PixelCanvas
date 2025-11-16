@@ -30,7 +30,6 @@ export interface CustomizationOptions {
 }
 
 // --- The Main Product Type ---
-// This now matches our new MongoDB model
 export interface Product {
   _id: string;
   name: string;
@@ -42,4 +41,32 @@ export interface Product {
   customizationOptions: CustomizationOptions;
   createdAt: string;
   updatedAt: string;
+}
+
+// --- Cart Item Type ---
+export interface CartItem {
+  _id?: string; // MongoDB ID (optional for guest carts)
+  productId: string;
+  productName: string;
+  productSlug: string;
+  basePrice: number;
+  baseImageUrl: string;
+  selectedColor?: ColorOption;
+  selectedSize?: SizeOption;
+  selectedFrame?: FrameOption;
+  selectedDesign?: string; // URL
+  generatedImage?: string; // Base64 or URL
+  customText?: string;
+  quantity: number;
+  itemPrice: number; // basePrice + size modifier
+}
+
+// --- Cart Type ---
+export interface Cart {
+  _id?: string;
+  user?: string;
+  items: CartItem[];
+  totalPrice: number;
+  createdAt?: string;
+  updatedAt?: string;
 }

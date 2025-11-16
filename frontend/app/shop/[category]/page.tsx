@@ -1,14 +1,12 @@
 import CategoryCard from '@/components/CategoryCard';
 import { Product } from '@/types';
 
-// This is the standard, correct interface for props
 interface CategoryPageProps {
   params: {
-    category: string; // e.g., "t-shirts"
+    category: string;
   };
 }
 
-// Helper function to format the title
 function formatTitle(slug: string): string {
   if (!slug) return 'Products';
   return slug
@@ -17,7 +15,6 @@ function formatTitle(slug: string): string {
     .join(' ');
 }
 
-// Fetch all products for this MAIN category (e.g., all t-shirts)
 async function getProductsByMainCategory(
   mainCategory: string
 ): Promise<Product[]> {
@@ -25,7 +22,7 @@ async function getProductsByMainCategory(
     const res = await fetch(
       `http://localhost:5001/api/products/main-category/${mainCategory}`,
       {
-        cache: 'no-store', // This prevents caching issues
+        cache: 'no-store',
       }
     );
     if (!res.ok) {
@@ -39,23 +36,9 @@ async function getProductsByMainCategory(
   }
 }
 
-// --- THIS IS THE CORRECTION ---
-// We receive '{ params }' directly as an argument.
-// We do NOT use 'await props'.
-
-// export default async function DynamicCategoryPage({ 
-//   params 
-// }: { 
-//   params: Promise<{ category: string }> 
-// }) {
-//   const { category } = await params
-//   return <div>{category}</div>
-// }
-
 export default async function DynamicCategoryPage({
   params
 }: {params: Promise<{ category: string }>}) {
-  // We can now directly access params.category
   const { category } = await params;
 
   const products = await getProductsByMainCategory(category);
@@ -63,7 +46,7 @@ export default async function DynamicCategoryPage({
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <h1 className="mb-8 text-4xl font-bold tracking-tight text-white">
+      <h1 className="mb-8 text-5xl font-bold tracking-tight text-gray-800" style={{ fontFamily: 'Comfortaa, sans-serif' }}>
         {title}
       </h1>
 
@@ -80,8 +63,8 @@ export default async function DynamicCategoryPage({
           ))}
         </div>
       ) : (
-        <div className="flex h-40 items-center justify-center rounded-lg border border-dashed border-gray-700 bg-gray-900">
-          <p className="text-gray-400">
+        <div className="flex h-40 items-center justify-center rounded-2xl border-2 border-dashed border-purple-300 bg-white/50 backdrop-blur-sm">
+          <p className="text-gray-600">
             No products found in this category. Check back soon!
           </p>
         </div>

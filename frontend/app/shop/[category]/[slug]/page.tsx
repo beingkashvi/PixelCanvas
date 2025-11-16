@@ -14,6 +14,7 @@ import {
   X,
 } from 'lucide-react';
 import { Product } from '@/types';
+import { useCart } from '@/context/CartContext';
 
 interface CustomizerPageProps {
   params: Promise<{
@@ -37,18 +38,9 @@ async function getProductBySlug(slug: string): Promise<Product | null> {
   }
 }
 
-// Helper function to convert hex to RGB
-function hexToRgb(hex: string) {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? {
-    r: parseInt(result[1], 16),
-    g: parseInt(result[2], 16),
-    b: parseInt(result[3], 16)
-  } : null;
-}
-
 export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
   const resolvedParams = use(params);
+  const { addToCart } = useCart();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loadingProduct, setLoadingProduct] = useState(true);
@@ -157,19 +149,29 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
     setShowColorPicker(false);
   };
 
-  const handleAddToCart = () => {
-    const finalPrice =
-      (product?.basePrice || 0) + (selectedSize?.priceModifier || 0);
+  const handleAddToCart = async () => {
+    if (!product) return;
 
-    console.log('--- ITEM ADDED TO CART ---');
-    console.log('Product:', product?.name);
-    console.log('Price:', finalPrice);
-    if (selectedColor) console.log('Color:', selectedColor.name);
-    if (selectedSize) console.log('Size:', selectedSize.name);
-    if (selectedFrame) console.log('Frame:', selectedFrame.name);
-    if (generatedImage) console.log('Design:', 'AI Generated');
-    if (selectedDesign) console.log('Design:', 'Pre-made');
-    if (customText) console.log('Custom Text:', customText);
+    const finalPrice =
+      product.basePrice + (selectedSize?.priceModifier || 0);
+
+    const cartItem = {
+      productId: product._id,
+      productName: product.name,
+      productSlug: product.slug,
+      basePrice: product.basePrice,
+      baseImageUrl: product.baseImageUrl,
+      selectedColor: selectedColor || undefined,
+      selectedSize: selectedSize || undefined,
+      selectedFrame: selectedFrame || undefined,
+      selectedDesign: selectedDesign || undefined,
+      generatedImage: generatedImage || undefined,
+      customText: customText || undefined,
+      quantity: 1,
+      itemPrice: finalPrice,
+    };
+
+    await addToCart(cartItem);
 
     setShowSuccessToast(true);
     setTimeout(() => setShowSuccessToast(false), 3000);
@@ -178,7 +180,7 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
   if (loadingProduct) {
     return (
       <div className="flex h-[80vh] items-center justify-center">
-        <Loader2 className="h-12 w-12 animate-spin text-white" />
+        <Loader2 className="h-12 w-12 animate-spin text-purple-500" />
       </div>
     );
   }
@@ -186,7 +188,7 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
   if (!product) {
     return (
       <div className="flex h-[80vh] items-center justify-center">
-        <p className="text-2xl text-red-400">Product not found.</p>
+        <p className="text-2xl text-red-500">Product not found.</p>
       </div>
     );
   }
@@ -197,34 +199,35 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
   return (
     <>
       <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-20 md:grid-cols-2">
           {/* --- Image Canvas Column (Left) --- */}
           <div
-            className="relative aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-gray-100 to-gray-300"
+            className="relative aspect-square overflow-hidden rounded-3xl bg-gradient-to-br from-purple-50 to-pink-50 shadow-2xl"
             style={{
               border: selectedFrame
                 ? `16px solid ${selectedFrame.hex}`
                 : 'none',
-              boxShadow: selectedFrame ? '0 0 15px rgba(0,0,0,0.5)' : 'none',
+              boxShadow: selectedFrame 
+                ? '0 20px 60px rgba(0,0,0,0.3)' 
+                : '0 20px 60px rgba(139, 92, 246, 0.3)',
             }}
-            
           >
             {/* Base Product Image with Color Filter */}
             <div className="relative w-full h-full">
-            <Image
+              <Image
                 src={product.baseImageUrl}
                 alt={product.name}
                 fill
                 className="object-contain transition-all duration-300"
                 style={{
                   filter: selectedColor 
-                    ? 'grayscale(100%) brightness(0.52) contrast(2.5)'
+                    ? 'grayscale(50%) brightness(0.7) contrast(2.5)'
                     : 'none',
                 }}
                 priority
               />
               
-              {/* Color overlay mask - only affects the product */}
+              {/* Color overlay mask */}
               {selectedColor && (
                 <>
                   <div 
@@ -232,7 +235,7 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                     style={{
                       background: selectedColor.hex,
                       mixBlendMode: 'multiply',
-                      opacity: 0.85,
+                      opacity: 0.9,
                       maskImage: `url(${product.baseImageUrl})`,
                       WebkitMaskImage: `url(${product.baseImageUrl})`,
                       maskSize: 'contain',
@@ -263,7 +266,7 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
               )}
             </div>
 
-            {/* Design Overlay (Pre-made or AI) */}
+            {/* Design Overlay */}
             <div className="absolute inset-0">
               {(generatedImage || selectedDesign) && (
                 <Image
@@ -280,7 +283,8 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                     className="text-4xl font-bold text-white"
                     style={{ 
                       textShadow: '2px 2px 4px rgba(0,0,0,0.8), -2px -2px 4px rgba(0,0,0,0.8)',
-                      WebkitTextStroke: '1px black'
+                      WebkitTextStroke: '1px black',
+                      fontFamily: 'Comfortaa, sans-serif'
                     }}
                   >
                     {customText}
@@ -291,77 +295,77 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
 
             {/* Loading Spinner */}
             {isGenerating && (
-              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black bg-opacity-70">
-                <Loader2 className="h-16 w-16 animate-spin text-white" />
-                <p className="mt-4 text-white">Generating your design...</p>
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm rounded-3xl">
+                <Loader2 className="h-16 w-16 animate-spin text-purple-500" />
+                <p className="mt-4 text-gray-800 font-semibold">Generating your design...</p>
               </div>
             )}
           </div>
 
           {/* --- Options Column (Right) --- */}
           <div className="space-y-6">
-            <h1 className="text-4xl font-bold tracking-tight text-white">
+            <h1 className="text-5xl font-bold tracking-tight text-gray-800" style={{ fontFamily: 'Comfortaa, sans-serif' }}>
               {product.name}
             </h1>
-            <p className="text-3xl text-gray-300">${finalPrice.toFixed(2)}</p>
+            <p className="text-4xl font-bold text-white">${finalPrice.toFixed(2)}</p>
 
-            {/* Color Selector - Always show for all products */}
-            <div>
-              <h3 className="flex items-center text-lg font-medium text-white">
-                <Palette className="mr-2 h-5 w-5" />
+            {/* Color Selector */}
+            <div className="rounded-2xl bg-white/80 backdrop-blur-sm p-6 shadow-lg border border-purple-100">
+              <h3 className="flex items-center text-lg font-bold text-gray-800 mb-4">
+                <Palette className="mr-2 h-5 w-5 text-purple-500" />
                 Color: {selectedColor?.name || 'Select a color'}
               </h3>
-              <div className="mt-2 flex space-x-2 items-center">
+              <div className="flex space-x-3 items-center flex-wrap gap-2">
                 {options.colors && options.colors.length > 0 && options.colors.map((color) => (
                   <button
                     key={color.name}
                     onClick={() => setSelectedColor(color)}
-                    className={`h-8 w-8 rounded-full border-2 ${
+                    className={`h-10 w-10 rounded-full border-3 transition-all ${
                       selectedColor?.name === color.name && selectedColor.name !== 'Custom'
-                        ? 'border-blue-500 ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-900'
-                        : 'border-gray-700'
+                        ? 'border-purple-500 ring-4 ring-purple-200 scale-110'
+                        : 'border-purple-200 hover:scale-105'
                     }`}
                     style={{ backgroundColor: color.hex }}
                   >
                     <span className="sr-only">{color.name}</span>
                   </button>
                 ))}
-                {/* Custom Color Picker Button - Always available */}
+                {/* Custom Color Picker Button */}
                 <button
                   onClick={() => setShowColorPicker(!showColorPicker)}
-                  className={`h-8 w-8 rounded-full border-2 flex items-center justify-center ${
+                  className={`h-10 w-10 rounded-full border-3 flex items-center justify-center transition-all ${
                     selectedColor?.name === 'Custom'
-                      ? 'border-blue-500 ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-900'
-                      : 'border-gray-700'
+                      ? 'border-purple-500 ring-4 ring-purple-200 scale-110'
+                      : 'border-purple-200 hover:scale-105'
                   }`}
                   style={{ 
-                    backgroundColor: selectedColor?.name === 'Custom' ? selectedColor.hex : '#1f2937',
+                    backgroundColor: selectedColor?.name === 'Custom' ? selectedColor.hex : '#f3f4f6',
                   }}
                 >
-                  <Palette className="h-4 w-4 text-white" />
+                  <Palette className="h-5 w-5 text-purple-600" />
                 </button>
               </div>
 
               {/* Color Picker Popup */}
               {showColorPicker && (
-                <div className="mt-3 rounded-lg border border-gray-700 bg-gray-800 p-4">
+                <div className="mt-4 rounded-xl bg-purple-50 p-4 border-2 border-purple-200">
                   <div className="flex items-center gap-3">
                     <input
                       type="color"
                       value={customColorHex}
                       onChange={(e) => setCustomColorHex(e.target.value)}
-                      className="h-10 w-20 cursor-pointer rounded border-2 border-gray-600"
+                      className="h-12 w-20 cursor-pointer rounded-lg border-2 border-purple-300"
                     />
                     <input
                       type="text"
                       value={customColorHex}
                       onChange={(e) => setCustomColorHex(e.target.value)}
                       placeholder="#000000"
-                      className="flex-1 rounded-md border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+                      className="flex-1 rounded-lg border-2 border-purple-200 bg-white px-4 py-2 text-gray-800 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all"
                     />
                     <button
                       onClick={handleCustomColorSelect}
-                      className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
+                      className="rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-2 font-bold text-white shadow-lg hover:shadow-xl transition-all"
                     >
                       Apply
                     </button>
@@ -372,29 +376,29 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
 
             {/* Size Selector */}
             {options.sizes && options.sizes.length > 0 && (
-              <div>
-                <div className="flex items-center justify-between">
-                  <h3 className="flex items-center text-lg font-medium text-white">
-                    <Square className="mr-2 h-5 w-5" />
+              <div className="rounded-2xl bg-white/80 backdrop-blur-sm p-6 shadow-lg border border-purple-100">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="flex items-center text-lg font-bold text-gray-800">
+                    <Square className="mr-2 h-5 w-5 text-purple-500" />
                     Size: {selectedSize?.name}
                   </h3>
                   <button
                     onClick={() => setShowSizeChart(true)}
-                    className="flex items-center text-sm text-blue-400 hover:text-blue-300"
+                    className="flex items-center text-sm text-purple-600 hover:text-pink-600 font-semibold transition-colors"
                   >
                     <Ruler className="mr-1 h-4 w-4" />
                     Size Chart
                   </button>
                 </div>
-                <div className="mt-2 flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2">
                   {options.sizes.map((size) => (
                     <button
                       key={size.name}
                       onClick={() => setSelectedSize(size)}
-                      className={`rounded-md border-2 px-4 py-2 text-sm font-medium ${
+                      className={`rounded-xl border-2 px-5 py-3 text-sm font-bold transition-all ${
                         selectedSize?.name === size.name
-                          ? 'border-blue-500 bg-blue-900 text-white'
-                          : 'border-gray-700 bg-gray-800 text-gray-300'
+                          ? 'border-purple-500 bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg scale-105'
+                          : 'border-purple-200 bg-white text-gray-700 hover:border-purple-400'
                       }`}
                     >
                       {size.name}
@@ -407,20 +411,20 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
 
             {/* Frame Selector */}
             {options.frames && options.frames.length > 0 && (
-              <div>
-                <h3 className="flex items-center text-lg font-medium text-white">
-                  <Palette className="mr-2 h-5 w-5" />
+              <div className="rounded-2xl bg-white/80 backdrop-blur-sm p-6 shadow-lg border border-purple-100">
+                <h3 className="flex items-center text-lg font-bold text-gray-800 mb-4">
+                  <Palette className="mr-2 h-5 w-5 text-purple-500" />
                   Frame: {selectedFrame?.name}
                 </h3>
-                <div className="mt-2 flex space-x-2">
+                <div className="flex space-x-3 flex-wrap gap-2">
                   {options.frames.map((frame) => (
                     <button
                       key={frame.name}
                       onClick={() => setSelectedFrame(frame)}
-                      className={`h-8 w-8 rounded-full border-2 ${
+                      className={`h-10 w-10 rounded-full border-3 transition-all ${
                         selectedFrame?.name === frame.name
-                          ? 'border-blue-500 ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-900'
-                          : 'border-gray-700'
+                          ? 'border-purple-500 ring-4 ring-purple-200 scale-110'
+                          : 'border-purple-200 hover:scale-105'
                       }`}
                       style={{ backgroundColor: frame.hex }}
                     >
@@ -433,20 +437,20 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
 
             {/* Pre-made Designs */}
             {options.premadeDesigns && options.premadeDesigns.length > 0 && (
-              <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
-                <h3 className="flex items-center text-lg font-medium text-white">
-                  <Layers className="mr-2 h-5 w-5" />
+              <div className="rounded-2xl bg-white/80 backdrop-blur-sm p-6 shadow-lg border border-purple-100">
+                <h3 className="flex items-center text-lg font-bold text-gray-800 mb-4">
+                  <Layers className="mr-2 h-5 w-5 text-purple-500" />
                   Choose a Design
                 </h3>
-                <div className="mt-3 grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-3">
                   {options.premadeDesigns.map((design) => (
                     <button
                       key={design.name}
                       onClick={() => handleSelectDesign(design.url)}
-                      className={`overflow-hidden rounded-md border-2 ${
+                      className={`overflow-hidden rounded-xl border-3 transition-all hover:scale-105 ${
                         selectedDesign === design.url
-                          ? 'border-blue-500'
-                          : 'border-transparent'
+                          ? 'border-purple-500 ring-4 ring-purple-200'
+                          : 'border-purple-200'
                       }`}
                     >
                       <Image
@@ -463,27 +467,27 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
             )}
 
             {/* AI Design */}
-            <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+            <div className="rounded-2xl bg-gradient-to-br from-purple-50 to-pink-50 p-6 shadow-lg border-2 border-purple-200">
               <label
                 htmlFor="ai-prompt"
-                className="flex items-center text-lg font-medium text-white"
+                className="flex items-center text-lg font-bold text-gray-800 mb-4"
               >
-                <Sparkles className="mr-2 h-5 w-5 text-yellow-400" />
+                <Sparkles className="mr-2 h-5 w-5 text-yellow-500" />
                 Or Generate with AI
               </label>
-              <div className="mt-3 flex gap-2">
+              <div className="flex gap-2">
                 <input
                   type="text"
                   id="ai-prompt"
                   value={aiPrompt}
                   onChange={(e) => setAiPrompt(e.target.value)}
                   placeholder="e.g., A happy cat wearing a hat"
-                  className="flex-1 rounded-md border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+                  className="flex-1 rounded-xl border-2 border-purple-200 bg-white px-4 py-3 text-gray-800 placeholder-gray-400 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all"
                 />
                 <button
                   onClick={handleGenerateImage}
                   disabled={isGenerating}
-                  className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 font-medium text-white shadow-sm hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex items-center rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-3 font-bold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isGenerating ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -492,16 +496,16 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                   )}
                 </button>
               </div>
-              {error && <p className="mt-2 text-sm text-red-400">{error}</p>}
+              {error && <p className="mt-2 text-sm text-red-500 font-semibold">{error}</p>}
             </div>
 
             {/* Add Text */}
-            <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
+            <div className="rounded-2xl bg-white/80 backdrop-blur-sm p-6 shadow-lg border border-purple-100">
               <label
                 htmlFor="custom-text"
-                className="flex items-center text-lg font-medium text-white"
+                className="flex items-center text-lg font-bold text-gray-800 mb-4"
               >
-                <Type className="mr-2 h-5 w-5" />
+                <Type className="mr-2 h-5 w-5 text-purple-500" />
                 Add Custom Text
               </label>
               <input
@@ -510,14 +514,14 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                 value={customText}
                 onChange={(e) => setCustomText(e.target.value)}
                 placeholder="Your text here..."
-                className="mt-3 w-full rounded-md border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-500 focus:border-blue-500 focus:ring-blue-500"
+                className="w-full rounded-xl border-2 border-purple-200 bg-white px-4 py-3 text-gray-800 placeholder-gray-400 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all"
               />
             </div>
 
             {/* Add to Cart Button */}
             <button
               onClick={handleAddToCart}
-              className="w-full rounded-md bg-green-600 px-8 py-3 text-lg font-semibold text-white shadow-sm hover:bg-green-700"
+              className="w-full rounded-full bg-gradient-to-r from-green-400 to-green-500 px-8 py-5 text-xl font-bold text-white shadow-2xl hover:shadow-3xl hover:scale-105 transition-all"
             >
               Add to Cart
             </button>
@@ -527,17 +531,19 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
 
       {/* Size Chart Modal */}
       {showSizeChart && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-4">
-          <div className="relative max-w-4xl w-full bg-gray-800 rounded-lg">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="relative max-w-4xl w-full bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl border-2 border-purple-200">
             <button
               onClick={() => setShowSizeChart(false)}
-              className="absolute right-4 top-4 text-gray-400 hover:text-white"
+              className="absolute right-6 top-6 text-gray-600 hover:text-gray-800 bg-white rounded-full p-2 shadow-lg"
             >
               <X className="h-6 w-6" />
             </button>
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-white mb-4">Size Chart</h2>
-              <div className="relative w-full h-[500px]">
+            <div className="p-8">
+              <h2 className="text-3xl font-bold text-gray-800 mb-6" style={{ fontFamily: 'Comfortaa, sans-serif' }}>
+                Size Chart
+              </h2>
+              <div className="relative w-full h-[500px] rounded-2xl overflow-hidden">
                 <Image
                   src="/images/size-chart.png"
                   alt="Size Chart"
@@ -550,16 +556,16 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
         </div>
       )}
 
-      {/* "Add to Cart" Toast Notification */}
+      {/* Success Toast */}
       <div
-        className={`fixed bottom-4 right-4 z-50 flex items-center rounded-lg bg-gray-800 p-4 shadow-lg ring-1 ring-black ring-opacity-5 transition-all duration-300 ${
+        className={`fixed bottom-6 right-6 z-50 flex items-center rounded-2xl bg-white/95 backdrop-blur-md p-5 shadow-2xl border-2 border-green-200 transition-all duration-300 ${
           showSuccessToast
             ? 'translate-x-0 opacity-100'
             : 'translate-x-full opacity-0'
         }`}
       >
-        <CheckCircle className="h-6 w-6 text-green-400" />
-        <p className="ml-3 font-medium text-white">
+        <CheckCircle className="h-7 w-7 text-green-500" />
+        <p className="ml-3 font-bold text-gray-800">
           Added to cart successfully!
         </p>
       </div>

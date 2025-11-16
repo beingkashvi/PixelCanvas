@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/Header'; // Import the new Header
+import Header from '@/components/Header';
+import { AuthProvider } from '@/context/AuthContext';
+import { CartProvider } from '@/context/CartContext'; // NEW: Import CartProvider
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,16 +19,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-50 text-gray-900`}>
-        {/* Add the Header to every page */}
-        <Header />
-        
-        {/* Page content will be injected here */}
-        <main className="container mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
-          {children}
-        </main>
-        
-        {/* You could add a Footer component here later */}
+      <body className={`${inter.className} bg-gray-900 text-gray-200`}>
+        {/* Wrap in AuthProvider first, then CartProvider */}
+        <AuthProvider>
+          <CartProvider>
+            <Header />
+            <main className="container mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+              {children}
+            </main>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

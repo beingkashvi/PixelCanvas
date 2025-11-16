@@ -187,6 +187,38 @@ const products = [
       ],
     },
   },
+  {
+    name: 'Throw Pillow',
+    slug: 'throw-pillow',
+    mainCategory: 'home-living',
+    description: 'A soft, durable 100% spun-polyester pillow.',
+    basePrice: 22.99,
+    baseImageUrl: '/images/home/pillow.png', // Our new local image
+    customizationOptions: {
+      colors: [
+        { name: 'White', hex: '#FFFFFF' },
+        { name: 'Light Grey', hex: '#e0e0e0' },
+        { name: 'Cream', hex: '#F5F5DC' },
+        { name: 'Black', hex: '#222222' },
+      ],
+      sizes: [
+        { name: '16x16', priceModifier: 0 },
+        { name: '18x18', priceModifier: 3 },
+        { name: '20x20', priceModifier: 5 },
+      ],
+      frames: [],
+      premadeDesigns: [
+        {
+          name: 'Home Sweet Home',
+          url: 'https://placehold.co/400x400/3B82F6/FFF?text=Home+Sweet+Home',
+        },
+        {
+          name: 'Monogram',
+          url: 'https://placehold.co/400x400/EC4899/FFF?text=K',
+        },
+      ],
+    }
+  }
 
   // ---
   // CATEGORY: PRINTS
