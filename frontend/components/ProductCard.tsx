@@ -46,7 +46,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       {/* Price Footer */}
       <div className="rounded-b-2xl bg-gradient-to-r from-purple-50 to-pink-50 px-5 py-4 border-t border-purple-100">
         <p className="text-lg font-bold text-purple-600">
-          From ${product.basePrice.toFixed(2)}
+          From ₹{product.basePrice.toFixed(2)}
         </p>
       </div>
     </Link>

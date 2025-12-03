@@ -26,8 +26,16 @@ const products = [
       frames: [],
       premadeDesigns: [
         {
-          name: 'Minimalist Line Art',
-          url: 'https://placehold.co/400x400/333/FFF?text=Line+Art',
+          name: "Rainbow",
+          url: "/images/designs/rainbow.png"
+        },
+        {
+          name: "Geometric",
+          url: "/images/designs/geometric.png"
+        },
+        {
+          name: "Abstract",
+          url: "/images/designs/abstract.png"
         },
       ],
     },
@@ -55,8 +63,16 @@ const products = [
       frames: [],
       premadeDesigns: [
         {
-          name: 'University Logo',
-          url: 'https://placehold.co/400x400/FFC107/333?text=University',
+          name: "Rainbow",
+          url: "/images/designs/rainbow.png"
+        },
+        {
+          name: "Geometric",
+          url: "/images/designs/geometric.png"
+        },
+        {
+          name: "Abstract",
+          url: "/images/designs/abstract.png"
         },
       ],
     },
@@ -82,8 +98,16 @@ const products = [
       frames: [],
       premadeDesigns: [
         {
-          name: 'Simple Text',
-          url: 'https://placehold.co/400x400/333/FFF?text=Classic',
+          name: "Rainbow",
+          url: "/images/designs/rainbow.png"
+        },
+        {
+          name: "Geometric",
+          url: "/images/designs/geometric.png"
+        },
+        {
+          name: "Abstract",
+          url: "/images/designs/abstract.png"
         },
       ],
     },
@@ -108,8 +132,16 @@ const products = [
       frames: [],
       premadeDesigns: [
         {
-          name: 'Best Dad Ever',
-          url: 'https://placehold.co/400x400/3B82F6/FFF?text=Best+Dad',
+          name: "Coffee Quote",
+          url: "/images/designs/coffee-quote.png"
+        },
+        {
+          name: "Cute Cat",
+          url: "/images/designs/cute-cat.png"
+        },
+        {
+          name: "Mountain",
+          url: "/images/designs/mountain.png"
         },
       ],
     },
@@ -131,8 +163,16 @@ const products = [
       frames: [],
       premadeDesigns: [
         {
-          name: 'Surprise Message',
-          url: 'https://placehold.co/400x400/3B82F6/FFF?text=Surprise!',
+          name: "Coffee Quote",
+          url: "/images/designs/coffee-quote.png"
+        },
+        {
+          name: "Cute Cat",
+          url: "/images/designs/cute-cat.png"
+        },
+        {
+          name: "Mountain",
+          url: "/images/designs/mountain.png"
         },
       ],
     },
@@ -158,8 +198,12 @@ const products = [
       frames: [],
       premadeDesigns: [
         {
-          name: 'Embroidered Logo',
-          url: 'https://placehold.co/400x400/FFC107/333?text=Logo',
+          name: "Minimal Logo",
+          url: "/images/designs/minimal-logo.png"
+        },
+        {
+          name: "Skull",
+          url: "/images/designs/skull.png"
         },
       ],
     },
@@ -181,8 +225,12 @@ const products = [
       frames: [],
       premadeDesigns: [
         {
-          name: 'Book Lover',
-          url: 'https://placehold.co/400x400/22C55E/FFF?text=Read+More',
+          name: "Floral",
+          url: "/images/designs/floral.png"
+        },
+        {
+          name: "Heart",
+          url: "/images/designs/heart.png"
         },
       ],
     },
@@ -209,12 +257,12 @@ const products = [
       frames: [],
       premadeDesigns: [
         {
-          name: 'Home Sweet Home',
-          url: 'https://placehold.co/400x400/3B82F6/FFF?text=Home+Sweet+Home',
+          name: "Floral",
+          url: "/images/designs/floral.png"
         },
         {
-          name: 'Monogram',
-          url: 'https://placehold.co/400x400/EC4899/FFF?text=K',
+          name: "Heart",
+          url: "/images/designs/heart.png"
         },
       ],
     }

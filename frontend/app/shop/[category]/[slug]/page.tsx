@@ -26,7 +26,7 @@ interface CustomizerPageProps {
 async function getProductBySlug(slug: string): Promise<Product | null> {
   try {
     const res = await fetch(`http://localhost:5001/api/products/slug/${slug}`, {
-      next: { revalidate: 60 },
+      cache: 'no-store',
     });
     if (!res.ok) {
       throw new Error('Failed to fetch product data');
@@ -97,47 +97,46 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
   }, [resolvedParams.slug]);
 
   const handleGenerateImage = async () => {
-    if (!aiPrompt) {
+    if (!aiPrompt.trim()) {
       setError('Please enter a prompt for the AI.');
       return;
     }
+    
     setIsGenerating(true);
     setError(null);
-    setSelectedDesign(null);
+    setSelectedDesign(null); // Clear premade design if AI is generating
     setGeneratedImage(null);
 
-    const apiKey = '';
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
-    const payload = {
-      instances: [{ prompt: aiPrompt }],
-      parameters: { sampleCount: 1, aspectRatio: '1:1' },
-    };
-
     try {
-      const response = await fetch(apiUrl, {
+      // Call backend API that handles Hugging Face
+      const response = await fetch('http://localhost:5001/api/ai/generate-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ prompt: aiPrompt }),
       });
-      if (!response.ok) throw new Error(`API error: ${response.statusText}`);
-      const result = await response.json();
-      if (result.predictions && result.predictions[0]?.bytesBase64Encoded) {
-        setGeneratedImage(
-          `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`
-        );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to generate image');
+      }
+
+      const data = await response.json();
+      
+      if (data.imageUrl) {
+        setGeneratedImage(data.imageUrl);
       } else {
-        throw new Error('No image data returned from API.');
+        throw new Error('No image URL returned from API');
       }
     } catch (err: any) {
-      console.error(err);
-      setError(err.message || 'Failed to generate image.');
+      console.error('AI Generation error:', err);
+      setError(err.message || 'Failed to generate image. Please try again.');
     } finally {
       setIsGenerating(false);
     }
   };
 
   const handleSelectDesign = (url: string) => {
-    setGeneratedImage(null);
+    setGeneratedImage(null); // Clear AI-generated image
     setSelectedDesign(url);
   };
 
@@ -152,8 +151,7 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
   const handleAddToCart = async () => {
     if (!product) return;
 
-    const finalPrice =
-      product.basePrice + (selectedSize?.priceModifier || 0);
+    const finalPrice = product.basePrice + (selectedSize?.priceModifier || 0);
 
     const cartItem = {
       productId: product._id,
@@ -266,38 +264,45 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
               )}
             </div>
 
-            {/* Design Overlay */}
-            <div className="absolute inset-0">
+            {/* Design Overlay (AI-generated or premade) */}
+            <div className="absolute inset-0 flex items-center justify-center">
               {(generatedImage || selectedDesign) && (
-                <Image
-                  src={generatedImage || selectedDesign || ''}
-                  alt="Custom design"
-                  fill
-                  className="object-contain p-20"
-                />
-              )}
-              {/* Custom Text Overlay */}
-              {customText && (
-                <div className="absolute inset-0 flex items-center justify-center p-20">
-                  <span
-                    className="text-4xl font-bold text-white"
-                    style={{ 
-                      textShadow: '2px 2px 4px rgba(0,0,0,0.8), -2px -2px 4px rgba(0,0,0,0.8)',
-                      WebkitTextStroke: '1px black',
-                      fontFamily: 'Comfortaa, sans-serif'
-                    }}
-                  >
-                    {customText}
-                  </span>
+                <div className="relative w-1/4 h-1/3 transform  flex items-center justify-center">
+                  <Image
+                    src={generatedImage || selectedDesign || ''}
+                    alt="Custom design"
+                    fill
+                    className="object-contain drop-shadow-2xl"
+                  />
                 </div>
               )}
             </div>
 
-            {/* Loading Spinner */}
+            {/* Custom Text Overlay */}
+            {customText && (
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <span
+                  className="text-4xl font-bold text-white px-4 py-2"
+                  style={{ 
+                    textShadow: '3px 3px 6px rgba(0,0,0,0.9), -1px -1px 3px rgba(0,0,0,0.7)',
+                    WebkitTextStroke: '1.5px black',
+                    fontFamily: 'Comfortaa, sans-serif',
+                    maxWidth: '80%',
+                    textAlign: 'center',
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {customText}
+                </span>
+              </div>
+            )}
+
+            {/* Loading Spinner for AI Generation */}
             {isGenerating && (
               <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm rounded-3xl">
                 <Loader2 className="h-16 w-16 animate-spin text-purple-500" />
-                <p className="mt-4 text-gray-800 font-semibold">Generating your design...</p>
+                <p className="mt-4 text-gray-800 font-semibold animate-pulse">Generating your design...</p>
+                <p className="mt-2 text-sm text-gray-600">This may take 10-15 seconds</p>
               </div>
             )}
           </div>
@@ -307,7 +312,7 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
             <h1 className="text-5xl font-bold tracking-tight text-gray-800" style={{ fontFamily: 'Comfortaa, sans-serif' }}>
               {product.name}
             </h1>
-            <p className="text-4xl font-bold text-white">${finalPrice.toFixed(2)}</p>
+            <p className="text-4xl font-bold text-purple-600">₹{finalPrice.toFixed(2)}</p>
 
             {/* Color Selector */}
             <div className="rounded-2xl bg-white/80 backdrop-blur-sm p-6 shadow-lg border border-purple-100">
@@ -330,7 +335,6 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                     <span className="sr-only">{color.name}</span>
                   </button>
                 ))}
-                {/* Custom Color Picker Button */}
                 <button
                   onClick={() => setShowColorPicker(!showColorPicker)}
                   className={`h-10 w-10 rounded-full border-3 flex items-center justify-center transition-all ${
@@ -346,7 +350,6 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                 </button>
               </div>
 
-              {/* Color Picker Popup */}
               {showColorPicker && (
                 <div className="mt-4 rounded-xl bg-purple-50 p-4 border-2 border-purple-200">
                   <div className="flex items-center gap-3">
@@ -402,38 +405,13 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                       }`}
                     >
                       {size.name}
-                      {size.priceModifier > 0 && ` (+$${size.priceModifier})`}
+                      {size.priceModifier > 0 && ` (+₹${size.priceModifier})`}
                     </button>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Frame Selector */}
-            {options.frames && options.frames.length > 0 && (
-              <div className="rounded-2xl bg-white/80 backdrop-blur-sm p-6 shadow-lg border border-purple-100">
-                <h3 className="flex items-center text-lg font-bold text-gray-800 mb-4">
-                  <Palette className="mr-2 h-5 w-5 text-purple-500" />
-                  Frame: {selectedFrame?.name}
-                </h3>
-                <div className="flex space-x-3 flex-wrap gap-2">
-                  {options.frames.map((frame) => (
-                    <button
-                      key={frame.name}
-                      onClick={() => setSelectedFrame(frame)}
-                      className={`h-10 w-10 rounded-full border-3 transition-all ${
-                        selectedFrame?.name === frame.name
-                          ? 'border-purple-500 ring-4 ring-purple-200 scale-110'
-                          : 'border-purple-200 hover:scale-105'
-                      }`}
-                      style={{ backgroundColor: frame.hex }}
-                    >
-                      <span className="sr-only">{frame.name}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Pre-made Designs */}
             {options.premadeDesigns && options.premadeDesigns.length > 0 && (
@@ -442,7 +420,7 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                   <Layers className="mr-2 h-5 w-5 text-purple-500" />
                   Choose a Design
                 </h3>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-3 gap-3 grid-template-columns: auto auto;">
                   {options.premadeDesigns.map((design) => (
                     <button
                       key={design.name}
@@ -456,7 +434,7 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                       <Image
                         src={design.url}
                         alt={design.name}
-                        width={100}
+                        width={150}
                         height={100}
                         className="object-cover"
                       />
@@ -466,7 +444,7 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
               </div>
             )}
 
-            {/* AI Design */}
+            {/* AI Design Generation */}
             <div className="rounded-2xl bg-gradient-to-br from-purple-50 to-pink-50 p-6 shadow-lg border-2 border-purple-200">
               <label
                 htmlFor="ai-prompt"
@@ -481,13 +459,15 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                   id="ai-prompt"
                   value={aiPrompt}
                   onChange={(e) => setAiPrompt(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleGenerateImage()}
                   placeholder="e.g., A happy cat wearing a hat"
                   className="flex-1 rounded-xl border-2 border-purple-200 bg-white px-4 py-3 text-gray-800 placeholder-gray-400 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all"
+                  disabled={isGenerating}
                 />
                 <button
                   onClick={handleGenerateImage}
-                  disabled={isGenerating}
-                  className="inline-flex items-center rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-3 font-bold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={isGenerating || !aiPrompt.trim()}
+                  className="inline-flex items-center rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-3 font-bold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-100"
                 >
                   {isGenerating ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -496,10 +476,17 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                   )}
                 </button>
               </div>
-              {error && <p className="mt-2 text-sm text-red-500 font-semibold">{error}</p>}
+              {error && (
+                <p className="mt-3 text-sm text-red-600 font-semibold bg-red-50 border border-red-200 rounded-lg p-2">
+                  {error}
+                </p>
+              )}
+              <p className="mt-3 text-xs text-gray-600">
+                ✨ Powered by Hugging Face AI • Generation takes ~10-15 seconds
+              </p>
             </div>
 
-            {/* Add Text */}
+            {/* Add Custom Text */}
             <div className="rounded-2xl bg-white/80 backdrop-blur-sm p-6 shadow-lg border border-purple-100">
               <label
                 htmlFor="custom-text"
@@ -514,8 +501,14 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                 value={customText}
                 onChange={(e) => setCustomText(e.target.value)}
                 placeholder="Your text here..."
+                maxLength={50}
                 className="w-full rounded-xl border-2 border-purple-200 bg-white px-4 py-3 text-gray-800 placeholder-gray-400 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 transition-all"
               />
+              {customText && (
+                <p className="mt-2 text-xs text-gray-500">
+                  {customText.length}/50 characters
+                </p>
+              )}
             </div>
 
             {/* Add to Cart Button */}

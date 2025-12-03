@@ -2,6 +2,40 @@
 
 const mongoose = require("mongoose");
 
+const savedAddressSchema = new mongoose.Schema({
+  fullName: {
+    type: String,
+    required: true,
+  },
+  addressLine1: {
+    type: String,
+    required: true,
+  },
+  addressLine2: {
+    type: String,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true,
+  },
+  zipCode: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  country: {
+    type: String,
+    default: 'India',
+  },
+}, { timestamps: true });
+
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -14,20 +48,15 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true, // No two users can have the same email
+    unique: true,
   },
   password: {
     type: String,
     required: true,
   },
-  // We can also add an admin flag here if you want
-  // isAdmin: {
-  //   type: Boolean,
-  //   required: true,
-  //   default: false,
-  // },
+  savedAddresses: [savedAddressSchema],
 }, {
-  timestamps: true, // Automatically adds createdAt and updatedAt fields
+  timestamps: true,
 });
 
 const User = mongoose.model("User", userSchema);

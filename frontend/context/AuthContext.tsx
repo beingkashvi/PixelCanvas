@@ -9,12 +9,25 @@ import {
 } from 'react';
 import { useRouter } from 'next/navigation';
 
+export interface SavedAddress {
+  _id: string;
+  fullName: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  phone: string;
+  country: string;
+}
+
 // 1. Define the shape of our User Info
 interface UserInfo {
   _id: string;
   firstName: string;
   lastName: string;
   email: string;
+  savedAddresses?: SavedAddress[];
 }
 
 // 2. Define the shape of the Context
@@ -41,7 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
         const res = await fetch('http://localhost:5001/api/auth/me', {
           method: 'GET',
-          credentials: 'include', // Important: include cookies
+          credentials: 'include',
         });
 
         if (res.ok) {
@@ -64,7 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const res = await fetch('http://localhost:5001/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // Important: include cookies
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
 
@@ -92,13 +105,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // 7. Signup Function - FIXED to match backend expectations
+  // 7. Signup Function
   const signup = async (firstName: string, lastName: string, email: string, password: string) => {
     try {
       const res = await fetch('http://localhost:5001/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // Important: include cookies
+        credentials: 'include',
         body: JSON.stringify({ firstName, lastName, email, password }),
       });
       
