@@ -108,24 +108,23 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
     setGeneratedImage(null);
 
     try {
-      // Call backend API that handles Hugging Face
+      // Call backend API (connected to Pollinations)
       const response = await fetch('http://localhost:5001/api/ai/generate-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: aiPrompt }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to generate image');
-      }
-
       const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to generate image');
+      }
       
       if (data.imageUrl) {
         setGeneratedImage(data.imageUrl);
       } else {
-        throw new Error('No image URL returned from API');
+        throw new Error('No image returned from API');
       }
     } catch (err: any) {
       console.error('AI Generation error:', err);
@@ -267,7 +266,7 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
             {/* Design Overlay (AI-generated or premade) */}
             <div className="absolute inset-0 flex items-center justify-center">
               {(generatedImage || selectedDesign) && (
-                <div className="relative w-1/4 h-1/3 transform  flex items-center justify-center">
+                <div className="relative w-1/4 h-1/3 transform flex items-center justify-center">
                   <Image
                     src={generatedImage || selectedDesign || ''}
                     alt="Custom design"
@@ -278,16 +277,16 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
               )}
             </div>
 
-            {/* Custom Text Overlay */}
+            {/* Custom Text Overlay - FIX: Constrained width and word-break */}
             {customText && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <span
-                  className="text-4xl font-bold text-white px-4 py-2"
+                  className="text-3xl font-bold text-white px-2 break-words"
                   style={{ 
-                    textShadow: '3px 3px 6px rgba(0,0,0,0.9), -1px -1px 3px rgba(0,0,0,0.7)',
-                    WebkitTextStroke: '1.5px black',
+                    textShadow: '2px 2px 5px rgba(0,0,0,0.9), -1px -1px 2px rgba(0,0,0,0.7)',
+                    WebkitTextStroke: '1px black',
                     fontFamily: 'Comfortaa, sans-serif',
-                    maxWidth: '80%',
+                    maxWidth: '40%', // RESTRICTED to 40% of container width (fits on shirt torso)
                     textAlign: 'center',
                     lineHeight: 1.2,
                   }}
@@ -301,8 +300,8 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
             {isGenerating && (
               <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/90 backdrop-blur-sm rounded-3xl">
                 <Loader2 className="h-16 w-16 animate-spin text-purple-500" />
-                <p className="mt-4 text-gray-800 font-semibold animate-pulse">Generating your design...</p>
-                <p className="mt-2 text-sm text-gray-600">This may take 10-15 seconds</p>
+                <p className="mt-4 text-gray-800 font-semibold animate-pulse">Creating your masterpiece...</p>
+                <p className="mt-2 text-sm text-gray-600">Generating with Flux Model...</p>
               </div>
             )}
           </div>
@@ -420,7 +419,7 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                   <Layers className="mr-2 h-5 w-5 text-purple-500" />
                   Choose a Design
                 </h3>
-                <div className="grid grid-cols-3 gap-3 grid-template-columns: auto auto;">
+                <div className="grid grid-cols-3 gap-3">
                   {options.premadeDesigns.map((design) => (
                     <button
                       key={design.name}
@@ -481,8 +480,9 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
                   {error}
                 </p>
               )}
-              <p className="mt-3 text-xs text-gray-600">
-                ✨ Powered by Hugging Face AI • Generation takes ~10-15 seconds
+              <p className="mt-3 text-xs text-gray-600 flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-purple-500" />
+                Powered by Pollinations AI (Flux Model) • Unlimited Free Generations
               </p>
             </div>
 
