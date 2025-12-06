@@ -265,17 +265,23 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
 
             {/* Design Overlay (AI-generated or premade) */}
             <div className="absolute inset-0 flex items-center justify-center">
-              {(generatedImage || selectedDesign) && (
-                <div className="relative w-1/4 h-1/3 transform flex items-center justify-center">
-                  <Image
-                    src={generatedImage || selectedDesign || ''}
-                    alt="Custom design"
-                    fill
-                    className="object-contain drop-shadow-2xl"
-                  />
-                </div>
-              )}
-            </div>
+  {(generatedImage || selectedDesign) && (
+    <div 
+      className={`relative transform flex items-center justify-center ${
+        resolvedParams.slug==='standard-tote-bag' 
+          ? 'w-2/5 h-2/5 transform translate-y-1/3'  // Larger and centered for tote bags
+          : 'w-1/4 h-1/3'   // Smaller for other products (t-shirts, etc.)
+      }`}
+    >
+      <Image
+        src={generatedImage || selectedDesign || ''}
+        alt="Custom design"
+        fill
+        className="object-contain drop-shadow-2xl"
+      />
+    </div>
+  )}
+</div>
 
             {/* Custom Text Overlay - FIX: Constrained width and word-break */}
             {customText && (
@@ -311,7 +317,7 @@ export default function DynamicCustomizerPage({ params }: CustomizerPageProps) {
             <h1 className="text-5xl font-bold tracking-tight text-gray-800" style={{ fontFamily: 'Comfortaa, sans-serif' }}>
               {product.name}
             </h1>
-            <p className="text-4xl font-bold text-purple-600">₹{finalPrice.toFixed(2)}</p>
+            <p className="text-4xl font-bold text-white">₹{finalPrice.toFixed(2)}</p>
 
             {/* Color Selector */}
             <div className="rounded-2xl bg-white/80 backdrop-blur-sm p-6 shadow-lg border border-purple-100">

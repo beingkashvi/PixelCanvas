@@ -1,0 +1,60 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "PixelCanvas" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e5]:
+        - link "Apparel" [active] [ref=e6] [cursor=pointer]:
+          - /url: /shop/apparel
+        - link "Drinkware" [ref=e7] [cursor=pointer]:
+          - /url: /shop/drinkware
+        - link "Accessories" [ref=e8] [cursor=pointer]:
+          - /url: /shop/accessories
+        - link "Home & Living" [ref=e9] [cursor=pointer]:
+          - /url: /shop/home-living
+      - generic [ref=e10]:
+        - link "Login" [ref=e11] [cursor=pointer]:
+          - /url: /login
+        - link "Sign Up" [ref=e12] [cursor=pointer]:
+          - /url: /signup
+        - link "Open cart" [ref=e13] [cursor=pointer]:
+          - /url: /cart
+          - img [ref=e14]
+  - main [ref=e17]:
+    - main [ref=e18]:
+      - heading "Apparel" [level=1] [ref=e19]
+      - generic [ref=e20]:
+        - link "Crew-Neck T-Shirt Crew-Neck T-Shirt A classic crew-neck with a modern, slim fit. Shop Now" [ref=e21] [cursor=pointer]:
+          - /url: /shop/apparel/crew-neck-tshirt
+          - img "Crew-Neck T-Shirt" [ref=e23]
+          - generic [ref=e25]:
+            - heading "Crew-Neck T-Shirt" [level=3] [ref=e26]
+            - paragraph [ref=e27]: A classic crew-neck with a modern, slim fit.
+            - generic [ref=e28]:
+              - generic [ref=e29]: Shop Now
+              - img [ref=e30]
+        - link "Pullover Hoodie Pullover Hoodie A warm and cozy heavyweight pullover hoodie. Shop Now" [ref=e32] [cursor=pointer]:
+          - /url: /shop/apparel/pullover-hoodie
+          - img "Pullover Hoodie" [ref=e34]
+          - generic [ref=e36]:
+            - heading "Pullover Hoodie" [level=3] [ref=e37]
+            - paragraph [ref=e38]: A warm and cozy heavyweight pullover hoodie.
+            - generic [ref=e39]:
+              - generic [ref=e40]: Shop Now
+              - img [ref=e41]
+        - link "Crewneck Sweatshirt Crewneck Sweatshirt A sturdy and warm sweatshirt bound to keep you warm. Shop Now" [ref=e43] [cursor=pointer]:
+          - /url: /shop/apparel/crewneck-sweatshirt
+          - img "Crewneck Sweatshirt" [ref=e45]
+          - generic [ref=e47]:
+            - heading "Crewneck Sweatshirt" [level=3] [ref=e48]
+            - paragraph [ref=e49]: A sturdy and warm sweatshirt bound to keep you warm.
+            - generic [ref=e50]:
+              - generic [ref=e51]: Shop Now
+              - img [ref=e52]
+  - button "Open Next.js Dev Tools" [ref=e59] [cursor=pointer]:
+    - img [ref=e60]
+  - alert [ref=e63]
+```

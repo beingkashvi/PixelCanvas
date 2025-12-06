@@ -18,7 +18,7 @@ export default function Header() {
           className="text-2xl font-bold text-gray-800 transition-colors hover:text-purple-600"
           style={{ fontFamily: 'Comfortaa, sans-serif' }}
         >
-          PrintShop
+          PixelCanvas
         </Link>
 
         {/* Navigation Links */}

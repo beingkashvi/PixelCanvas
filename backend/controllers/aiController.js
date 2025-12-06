@@ -13,8 +13,6 @@ const generateImage = async (req, res) => {
     console.log('Generating image with prompt:', prompt);
     console.log('Using Pollinations.ai (Flux Model)...');
 
-    // 1. Construct the URL
-    // We add a random seed to ensure different images for the same prompt
     const randomSeed = Math.floor(Math.random() * 1000000);
     const encodedPrompt = encodeURIComponent(prompt);
     
@@ -40,7 +38,7 @@ const generateImage = async (req, res) => {
     const base64Image = buffer.toString('base64');
     const finalImageUrl = `data:image/jpeg;base64,${base64Image}`;
 
-    console.log('✓ Image successfully converted to base64');
+    console.log('Image successfully converted to base64');
     console.log('Image size:', buffer.length, 'bytes');
 
     // 5. Send response

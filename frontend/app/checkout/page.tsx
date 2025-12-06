@@ -562,7 +562,7 @@ export default function CheckoutPage() {
               </div>
 
               {/* Security Badge */}
-              <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
+              <div className="flex items-center justify-center gap-2 text-sm text-white">
                 <ShieldCheck className="h-5 w-5 text-green-500" />
                 <span>Secure checkout powered by Razorpay</span>
               </div>

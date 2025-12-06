@@ -64,7 +64,7 @@ export default async function HomePage() {
                 Your Design, Our Canvas
               </h1>
               <p className="mt-6 text-xl text-white/90 leading-relaxed">
-                Create and order custom apparel, mugs, posters, and more.
+                Create and order custom apparel, mugs, accessories, and more.
               </p>
               <div className="mt-8">
                 <Link

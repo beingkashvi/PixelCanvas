@@ -151,7 +151,7 @@ const products = [
     slug: 'bottle',
     mainCategory: 'drinkware',
     description:
-      'A heat-activated magic mug. Starts black, reveals your design when hot.',
+      'A classic, shiny steel bottle.',
     basePrice: 19.99,
     baseImageUrl: '/images/drinkware/bottle.png', // Can use the same base mug
     customizationOptions: {
@@ -199,7 +199,7 @@ const products = [
       premadeDesigns: [
         {
           name: "Minimal Logo",
-          url: "/images/designs/minimal-logo.png"
+          url: "/images/designs/minimal_logo.png"
         },
         {
           name: "Skull",

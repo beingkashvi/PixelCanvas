@@ -61,7 +61,7 @@ export default function CartPage() {
         {cart.items.length > 0 && (
           <button
             onClick={clearCart}
-            className="text-sm text-red-500 hover:text-red-600 font-semibold transition-colors border-b border-red-200"
+            className="text-sm text-white hover:text-red-600 font-semibold transition-colors"
           >
             Clear Cart
           </button>
@@ -126,18 +126,24 @@ export default function CartPage() {
                   )}
 
                   {/* 3. Design Overlay (Correctly Scaled like Customizer) */}
-                  {(item.selectedDesign || item.generatedImage) && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="relative w-1/4 h-1/3">
-                        <Image
-                          src={item.selectedDesign || item.generatedImage || ''}
-                          alt="Design"
-                          fill
-                          className="object-contain drop-shadow-md"
-                        />
-                      </div>
-                    </div>
-                  )}
+{(item.selectedDesign || item.generatedImage) && (
+  <div className="absolute inset-0 flex items-center justify-center">
+    <div 
+      className={`relative ${
+        item.productSlug?.includes('tote')|| item.productName?.toLowerCase().includes('tote')
+          ? 'w-2/5 h-2/5 transform translate-y-1/3'  // Larger and centered for tote bags
+          : 'w-1/4 h-1/3'   // Smaller for other products
+      }`}
+    >
+      <Image
+        src={item.selectedDesign || item.generatedImage || ''}
+        alt="Design"
+        fill
+        className="object-contain drop-shadow-md"
+      />
+    </div>
+  </div>
+)}
 
                   {/* 4. Text Overlay (Miniaturized) */}
                   {item.customText && (

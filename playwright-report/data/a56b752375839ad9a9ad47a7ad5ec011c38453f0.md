@@ -1,0 +1,108 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "PixelCanvas" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e5]:
+        - link "Apparel" [ref=e6] [cursor=pointer]:
+          - /url: /shop/apparel
+        - link "Drinkware" [ref=e7] [cursor=pointer]:
+          - /url: /shop/drinkware
+        - link "Accessories" [ref=e8] [cursor=pointer]:
+          - /url: /shop/accessories
+        - link "Home & Living" [ref=e9] [cursor=pointer]:
+          - /url: /shop/home-living
+      - generic [ref=e10]:
+        - link "Login" [ref=e11] [cursor=pointer]:
+          - /url: /login
+        - link "Sign Up" [ref=e12] [cursor=pointer]:
+          - /url: /signup
+        - link "Open cart" [ref=e13] [cursor=pointer]:
+          - /url: /cart
+          - img [ref=e14]
+  - main [ref=e17]:
+    - main [ref=e18]:
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - heading "Your Design, Our Canvas" [level=1] [ref=e23]
+          - paragraph [ref=e24]: Create and order custom apparel, mugs, accessories, and more.
+          - link "Start Designing" [ref=e26] [cursor=pointer]:
+            - /url: /shop/apparel
+        - img "Custom printed products showcase" [ref=e29]
+      - generic [ref=e30]:
+        - heading "Featured Products" [level=2] [ref=e31]
+        - generic [ref=e32]:
+          - link "Crew-Neck T-Shirt Crew-Neck T-Shirt A classic crew-neck with a modern, slim fit. From ₹23.99" [ref=e33] [cursor=pointer]:
+            - /url: /shop/apparel/crew-neck-tshirt
+            - img "Crew-Neck T-Shirt" [ref=e35]
+            - generic [ref=e36]:
+              - heading "Crew-Neck T-Shirt" [level=3] [ref=e37]
+              - paragraph [ref=e38]: A classic crew-neck with a modern, slim fit.
+            - paragraph [ref=e40]: From ₹23.99
+          - link "Pullover Hoodie Pullover Hoodie A warm and cozy heavyweight pullover hoodie. From ₹34.99" [ref=e41] [cursor=pointer]:
+            - /url: /shop/apparel/pullover-hoodie
+            - img "Pullover Hoodie" [ref=e43]
+            - generic [ref=e44]:
+              - heading "Pullover Hoodie" [level=3] [ref=e45]
+              - paragraph [ref=e46]: A warm and cozy heavyweight pullover hoodie.
+            - paragraph [ref=e48]: From ₹34.99
+          - link "Crewneck Sweatshirt Crewneck Sweatshirt A sturdy and warm sweatshirt bound to keep you warm. From ₹29.99" [ref=e49] [cursor=pointer]:
+            - /url: /shop/apparel/crewneck-sweatshirt
+            - img "Crewneck Sweatshirt" [ref=e51]
+            - generic [ref=e52]:
+              - heading "Crewneck Sweatshirt" [level=3] [ref=e53]
+              - paragraph [ref=e54]: A sturdy and warm sweatshirt bound to keep you warm.
+            - paragraph [ref=e56]: From ₹29.99
+          - link "Ceramic Mug Ceramic Mug A classic 11oz ceramic mug. Sturdy and timeless. From ₹15.99" [ref=e57] [cursor=pointer]:
+            - /url: /shop/drinkware/ceramic-mug
+            - img "Ceramic Mug" [ref=e59]
+            - generic [ref=e60]:
+              - heading "Ceramic Mug" [level=3] [ref=e61]
+              - paragraph [ref=e62]: A classic 11oz ceramic mug. Sturdy and timeless.
+            - paragraph [ref=e64]: From ₹15.99
+      - generic [ref=e65]:
+        - heading "Explore All Categories" [level=2] [ref=e66]
+        - generic [ref=e67]:
+          - link "Apparel Apparel Custom T-Shirts, Hoodies, and more. Shop Now" [ref=e68] [cursor=pointer]:
+            - /url: /shop/apparel
+            - img "Apparel" [ref=e70]
+            - generic [ref=e72]:
+              - heading "Apparel" [level=3] [ref=e73]
+              - paragraph [ref=e74]: Custom T-Shirts, Hoodies, and more.
+              - generic [ref=e75]:
+                - generic [ref=e76]: Shop Now
+                - img [ref=e77]
+          - link "Drinkware Drinkware Personalized mugs for every occasion. Shop Now" [ref=e79] [cursor=pointer]:
+            - /url: /shop/drinkware
+            - img "Drinkware" [ref=e81]
+            - generic [ref=e83]:
+              - heading "Drinkware" [level=3] [ref=e84]
+              - paragraph [ref=e85]: Personalized mugs for every occasion.
+              - generic [ref=e86]:
+                - generic [ref=e87]: Shop Now
+                - img [ref=e88]
+          - link "Accessories Accessories Custom hats, tote bags, and more. Shop Now" [ref=e90] [cursor=pointer]:
+            - /url: /shop/accessories
+            - img "Accessories" [ref=e92]
+            - generic [ref=e94]:
+              - heading "Accessories" [level=3] [ref=e95]
+              - paragraph [ref=e96]: Custom hats, tote bags, and more.
+              - generic [ref=e97]:
+                - generic [ref=e98]: Shop Now
+                - img [ref=e99]
+          - link "Home & Living Home & Living Custom pillows, blankets, and aprons. Shop Now" [ref=e101] [cursor=pointer]:
+            - /url: /shop/home-living
+            - img "Home & Living" [ref=e103]
+            - generic [ref=e105]:
+              - heading "Home & Living" [level=3] [ref=e106]
+              - paragraph [ref=e107]: Custom pillows, blankets, and aprons.
+              - generic [ref=e108]:
+                - generic [ref=e109]: Shop Now
+                - img [ref=e110]
+  - button "Open Next.js Dev Tools" [ref=e117] [cursor=pointer]:
+    - img [ref=e118]
+  - alert [ref=e121]
+```
