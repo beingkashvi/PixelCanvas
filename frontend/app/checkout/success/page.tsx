@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle, Package, Loader2 } from 'lucide-react';
 
-export default function CheckoutSuccessPage() {
+// Separate component that uses useSearchParams
+function CheckoutSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [order, setOrder] = useState<any>(null);
@@ -158,5 +159,23 @@ export default function CheckoutSuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Loading fallback component
+function LoadingFallback() {
+  return (
+    <div className="flex h-[60vh] items-center justify-center">
+      <Loader2 className="h-12 w-12 animate-spin text-white" />
+    </div>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <CheckoutSuccessContent />
+    </Suspense>
   );
 }
