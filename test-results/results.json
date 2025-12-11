@@ -121,7 +121,7 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "failed",
-                  "duration": 6629,
+                  "duration": 11975,
                   "error": {
                     "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveTitle\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/PrintShop/\u001b[39m\nReceived string:  \u001b[31m\"Custom Print Shop\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveTitle\" with timeout 5000ms\u001b[22m\n\u001b[2m    9 × unexpected value \"Custom Print Shop\"\u001b[22m\n",
                     "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveTitle\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/PrintShop/\u001b[39m\nReceived string:  \u001b[31m\"Custom Print Shop\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveTitle\" with timeout 5000ms\u001b[22m\n\u001b[2m    9 × unexpected value \"Custom Print Shop\"\u001b[22m\n\n    at /Users/kashvi/Desktop/swe_project/tests/e2e/homepage.spec.ts:9:22",
@@ -145,7 +145,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:29:47.304Z",
+                  "startTime": "2025-12-06T11:34:41.450Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -195,7 +195,7 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 4513,
+                  "duration": 9695,
                   "errors": [],
                   "stdout": [
                     {
@@ -204,7 +204,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:29:47.302Z",
+                  "startTime": "2025-12-06T11:34:41.449Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -233,7 +233,7 @@
                   "workerIndex": 2,
                   "parallelIndex": 2,
                   "status": "failed",
-                  "duration": 6717,
+                  "duration": 11719,
                   "error": {
                     "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=Color')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=Color')\u001b[22m\n",
                     "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=Color')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=Color')\u001b[22m\n\n    at /Users/kashvi/Desktop/swe_project/tests/e2e/homepage.spec.ts:53:44",
@@ -257,7 +257,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:29:47.291Z",
+                  "startTime": "2025-12-06T11:34:41.450Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -307,7 +307,7 @@
                   "workerIndex": 3,
                   "parallelIndex": 3,
                   "status": "timedOut",
-                  "duration": 31049,
+                  "duration": 30799,
                   "error": {
                     "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
                     "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
@@ -328,7 +328,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:29:47.294Z",
+                  "startTime": "2025-12-06T11:34:41.450Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -373,7 +373,7 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 3513,
+                  "duration": 4171,
                   "errors": [],
                   "stdout": [
                     {
@@ -382,7 +382,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:29:53.481Z",
+                  "startTime": "2025-12-06T11:34:51.825Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -409,9 +409,9 @@
               "results": [
                 {
                   "workerIndex": 4,
-                  "parallelIndex": 0,
+                  "parallelIndex": 2,
                   "status": "passed",
-                  "duration": 3450,
+                  "duration": 5553,
                   "errors": [],
                   "stdout": [
                     {
@@ -420,7 +420,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:29:55.994Z",
+                  "startTime": "2025-12-06T11:34:54.262Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -447,9 +447,9 @@
               "results": [
                 {
                   "workerIndex": 5,
-                  "parallelIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1259,
+                  "duration": 3337,
                   "errors": [],
                   "stdout": [
                     {
@@ -458,7 +458,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:29:56.046Z",
+                  "startTime": "2025-12-06T11:34:54.406Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -487,7 +487,7 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 3686,
+                  "duration": 6164,
                   "errors": [],
                   "stdout": [
                     {
@@ -496,7 +496,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:29:57.001Z",
+                  "startTime": "2025-12-06T11:34:56.004Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -523,9 +523,9 @@
               "results": [
                 {
                   "workerIndex": 6,
-                  "parallelIndex": 2,
+                  "parallelIndex": 0,
                   "status": "failed",
-                  "duration": 6871,
+                  "duration": 12050,
                   "error": {
                     "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveTitle\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/PrintShop/\u001b[39m\nReceived string:  \u001b[31m\"Custom Print Shop\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveTitle\" with timeout 5000ms\u001b[22m\n\u001b[2m    9 × unexpected value \"Custom Print Shop\"\u001b[22m\n",
                     "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveTitle\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/PrintShop/\u001b[39m\nReceived string:  \u001b[31m\"Custom Print Shop\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveTitle\" with timeout 5000ms\u001b[22m\n\u001b[2m    9 × unexpected value \"Custom Print Shop\"\u001b[22m\n\n    at /Users/kashvi/Desktop/swe_project/tests/e2e/homepage.spec.ts:9:22",
@@ -549,7 +549,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:29:57.782Z",
+                  "startTime": "2025-12-06T11:34:58.386Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -597,9 +597,9 @@
               "results": [
                 {
                   "workerIndex": 7,
-                  "parallelIndex": 0,
+                  "parallelIndex": 2,
                   "status": "passed",
-                  "duration": 3818,
+                  "duration": 11530,
                   "errors": [],
                   "stdout": [
                     {
@@ -608,7 +608,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:29:59.931Z",
+                  "startTime": "2025-12-06T11:35:00.418Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -637,7 +637,7 @@
                   "workerIndex": 8,
                   "parallelIndex": 1,
                   "status": "failed",
-                  "duration": 7253,
+                  "duration": 12312,
                   "error": {
                     "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=Color')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=Color')\u001b[22m\n",
                     "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=Color')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=Color')\u001b[22m\n\n    at /Users/kashvi/Desktop/swe_project/tests/e2e/homepage.spec.ts:53:44",
@@ -661,7 +661,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:01.133Z",
+                  "startTime": "2025-12-06T11:35:02.489Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -708,10 +708,10 @@
               "projectName": "firefox",
               "results": [
                 {
-                  "workerIndex": 7,
+                  "workerIndex": 9,
                   "parallelIndex": 0,
                   "status": "timedOut",
-                  "duration": 30238,
+                  "duration": 30227,
                   "error": {
                     "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
                     "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
@@ -732,7 +732,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:04.466Z",
+                  "startTime": "2025-12-06T11:35:12.633Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -774,10 +774,10 @@
               "projectName": "firefox",
               "results": [
                 {
-                  "workerIndex": 9,
+                  "workerIndex": 7,
                   "parallelIndex": 2,
                   "status": "passed",
-                  "duration": 3779,
+                  "duration": 7812,
                   "errors": [],
                   "stdout": [
                     {
@@ -786,7 +786,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:08.138Z",
+                  "startTime": "2025-12-06T11:35:12.506Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -813,9 +813,9 @@
               "results": [
                 {
                   "workerIndex": 10,
-                  "parallelIndex": 1,
+                  "parallelIndex": 3,
                   "status": "passed",
-                  "duration": 3945,
+                  "duration": 5870,
                   "errors": [],
                   "stdout": [
                     {
@@ -824,7 +824,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:10.148Z",
+                  "startTime": "2025-12-06T11:35:13.355Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -850,10 +850,10 @@
               "projectName": "firefox",
               "results": [
                 {
-                  "workerIndex": 9,
-                  "parallelIndex": 2,
+                  "workerIndex": 11,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1116,
+                  "duration": 3362,
                   "errors": [],
                   "stdout": [
                     {
@@ -862,7 +862,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:12.522Z",
+                  "startTime": "2025-12-06T11:35:16.427Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -888,10 +888,10 @@
               "projectName": "firefox",
               "results": [
                 {
-                  "workerIndex": 9,
-                  "parallelIndex": 2,
+                  "workerIndex": 10,
+                  "parallelIndex": 3,
                   "status": "passed",
-                  "duration": 3037,
+                  "duration": 4976,
                   "errors": [],
                   "stdout": [
                     {
@@ -900,7 +900,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:13.646Z",
+                  "startTime": "2025-12-06T11:35:19.875Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -926,10 +926,10 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 11,
-                  "parallelIndex": 1,
+                  "workerIndex": 12,
+                  "parallelIndex": 2,
                   "status": "failed",
-                  "duration": 7885,
+                  "duration": 12480,
                   "error": {
                     "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveTitle\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/PrintShop/\u001b[39m\nReceived string:  \u001b[31m\"Custom Print Shop\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveTitle\" with timeout 5000ms\u001b[22m\n\u001b[2m    9 × unexpected value \"Custom Print Shop\"\u001b[22m\n",
                     "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mpage\u001b[39m\u001b[2m).\u001b[22mtoHaveTitle\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nExpected pattern: \u001b[32m/PrintShop/\u001b[39m\nReceived string:  \u001b[31m\"Custom Print Shop\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveTitle\" with timeout 5000ms\u001b[22m\n\u001b[2m    9 × unexpected value \"Custom Print Shop\"\u001b[22m\n\n    at /Users/kashvi/Desktop/swe_project/tests/e2e/homepage.spec.ts:9:22",
@@ -953,7 +953,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:15.603Z",
+                  "startTime": "2025-12-06T11:35:21.037Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -1000,10 +1000,10 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 12,
-                  "parallelIndex": 2,
+                  "workerIndex": 13,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 4156,
+                  "duration": 11215,
                   "errors": [],
                   "stdout": [
                     {
@@ -1012,7 +1012,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:17.319Z",
+                  "startTime": "2025-12-06T11:35:21.031Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1038,10 +1038,10 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 13,
+                  "workerIndex": 14,
                   "parallelIndex": 3,
                   "status": "failed",
-                  "duration": 7910,
+                  "duration": 9814,
                   "error": {
                     "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=Color')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=Color')\u001b[22m\n",
                     "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('text=Color')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('text=Color')\u001b[22m\n\n    at /Users/kashvi/Desktop/swe_project/tests/e2e/homepage.spec.ts:53:44",
@@ -1065,7 +1065,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:20.373Z",
+                  "startTime": "2025-12-06T11:35:25.831Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -1112,10 +1112,10 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 12,
-                  "parallelIndex": 2,
+                  "workerIndex": 13,
+                  "parallelIndex": 1,
                   "status": "interrupted",
-                  "duration": 28978,
+                  "duration": 21656,
                   "error": {
                     "message": "Error: page.waitForSelector: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"Add to Cart\")') to be visible\u001b[22m\n",
                     "stack": "Error: page.waitForSelector: Test ended.\nCall log:\n\u001b[2m  - waiting for locator('button:has-text(\"Add to Cart\")') to be visible\u001b[22m\n\n    at /Users/kashvi/Desktop/swe_project/tests/e2e/homepage.spec.ts:68:14",
@@ -1139,7 +1139,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:25.448Z",
+                  "startTime": "2025-12-06T11:35:32.956Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -1181,10 +1181,10 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 14,
-                  "parallelIndex": 3,
+                  "workerIndex": 15,
+                  "parallelIndex": 2,
                   "status": "passed",
-                  "duration": 4036,
+                  "duration": 11170,
                   "errors": [],
                   "stdout": [
                     {
@@ -1193,7 +1193,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:29.614Z",
+                  "startTime": "2025-12-06T11:35:34.659Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1219,10 +1219,10 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 15,
-                  "parallelIndex": 1,
+                  "workerIndex": 16,
+                  "parallelIndex": 3,
                   "status": "passed",
-                  "duration": 3943,
+                  "duration": 9936,
                   "errors": [],
                   "stdout": [
                     {
@@ -1231,7 +1231,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:29.613Z",
+                  "startTime": "2025-12-06T11:35:36.756Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1257,10 +1257,10 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 15,
-                  "parallelIndex": 1,
+                  "workerIndex": 17,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1589,
+                  "duration": 3864,
                   "errors": [],
                   "stdout": [
                     {
@@ -1269,7 +1269,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:34.341Z",
+                  "startTime": "2025-12-06T11:35:44.360Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1295,10 +1295,10 @@
               "projectName": "webkit",
               "results": [
                 {
-                  "workerIndex": 14,
-                  "parallelIndex": 3,
+                  "workerIndex": 15,
+                  "parallelIndex": 2,
                   "status": "passed",
-                  "duration": 3424,
+                  "duration": 6786,
                   "errors": [],
                   "stdout": [
                     {
@@ -1307,7 +1307,7 @@
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-12-06T09:30:34.433Z",
+                  "startTime": "2025-12-06T11:35:46.147Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1325,8 +1325,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-12-06T09:29:44.766Z",
-    "duration": 69683.875,
+    "startTime": "2025-12-06T11:34:40.479Z",
+    "duration": 74155.965,
     "expected": 15,
     "skipped": 1,
     "unexpected": 8,

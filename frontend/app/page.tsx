@@ -34,7 +34,7 @@ const categories = [
 // --- Data Fetching ---
 async function getFeaturedProducts(): Promise<Product[]> {
   try {
-    const res = await fetch('http://localhost:5001/api/products', {
+    const res = await fetch('http://pixelcanvas-backend:5001/api/products', {
       cache: 'no-store',
     });
 

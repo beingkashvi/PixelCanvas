@@ -20,7 +20,7 @@ async function getProductsByMainCategory(
 ): Promise<Product[]> {
   try {
     const res = await fetch(
-      `http://localhost:5001/api/products/main-category/${mainCategory}`,
+      `http://pixelcanvas-backend:5001/api/products/main-category/${mainCategory}`,
       {
         cache: 'no-store',
       }
